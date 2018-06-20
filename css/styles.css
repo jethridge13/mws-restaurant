@@ -337,6 +337,7 @@ nav h1 a {
 
   #footer {
     font-size: 0.8rem;
+    padding: 25px 0px 25px 0px;
   }
 
   .inside #map-container{
@@ -346,4 +347,25 @@ nav h1 a {
   #restaurant-address, td {
     font-size: 2.0rem;
   }
+
+  #restaurant-container, #reviews-container {
+    padding: 140px 0px 30px;
+  }
+
+  #restaurant-cuisine, #restaurant-img {
+    width: 100%;
+  }
+
+  #restaurant-hours > tr > td:first-child {
+    width: 33%;
+  }
+
+  #restaurant-hours > tr > td:nth-child(2) {
+    width: 66%;
+  }
+
+  #restaurant-name {
+    text-align: center;
+  }
+
 }

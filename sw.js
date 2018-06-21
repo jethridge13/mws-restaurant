@@ -19,6 +19,8 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
+	// restaurant.html caching inspired by Doug Brown's Project 1 Webinar
+	// https://www.youtube.com/watch?v=92dtrNU1GQc
 	if (event.request.url.indexOf('restaurant.html') > -1) {
 		event.request = new Request('restaurant.html')
 	}

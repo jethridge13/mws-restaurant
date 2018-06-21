@@ -3,9 +3,13 @@ self.addEventListener('install', function(event) {
 	const filesToCache = [
 		'/',
 		'sw.js',
-		'index.html',
 		'js/main.js',
-		'css/styles.css'
+		'js/dbhelper.js',
+		'js/restaurant_info.js',
+		'data/restaurants.json',
+		'css/styles.css',
+		'index.html',
+		'restaurant.html'
 	];
 	event.waitUntil(
 		caches.open('mws-restaurant-v1').then(function(cache) {
@@ -15,10 +19,18 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
+	if (event.request.url.indexOf('restaurant.html') > -1) {
+		event.request = new Request('restaurant.html')
+	}
 	event.respondWith(
-		caches.match(event.request).then(function(response) {
+		caches.match(event.request)
+		.then(function(response) {
 			if (response) return response;
 			return fetch(event.request);
+		})
+		.catch(function(error) {
+			console.error(error);
+			console.log(event.request);
 		})
 	);
 });

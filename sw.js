@@ -34,17 +34,18 @@ self.addEventListener('fetch', function(event) {
 				console.error(event.request);
 			})
 		);
+	} else {
+		event.respondWith(
+			caches.match(event.request)
+			.then(function(response) {
+				if (response) return response;
+				return fetch(event.request);
+			})
+			.catch(function(error) {
+				console.error('Error in caches.match');
+				console.error(error);
+				console.error(event.request);
+			})
+		);
 	}
-	event.respondWith(
-		caches.match(event.request)
-		.then(function(response) {
-			if (response) return response;
-			return fetch(event.request);
-		})
-		.catch(function(error) {
-			console.error('Error in caches.match');
-			console.error(error);
-			console.error(event.request);
-		})
-	);
 });

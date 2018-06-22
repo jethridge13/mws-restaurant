@@ -22,7 +22,18 @@ self.addEventListener('fetch', function(event) {
 	// restaurant.html caching inspired by Doug Brown's Project 1 Webinar
 	// https://www.youtube.com/watch?v=92dtrNU1GQc
 	if (event.request.url.indexOf('restaurant.html') > -1) {
-		event.request = new Request('restaurant.html')
+		event.respondWith(
+			caches.match('restaurant.html')
+			.then(function(response) {
+				if (response) return response;
+				return fetch(event.request);
+			})
+			.catch(function(error) {
+				console.error('Error in caches.match for restaurant.html');
+				console.error(error);
+				console.error(event.request);
+			})
+		);
 	}
 	event.respondWith(
 		caches.match(event.request)
@@ -31,8 +42,9 @@ self.addEventListener('fetch', function(event) {
 			return fetch(event.request);
 		})
 		.catch(function(error) {
+			console.error('Error in caches.match');
 			console.error(error);
-			console.log(event.request);
+			console.error(event.request);
 		})
 	);
 });

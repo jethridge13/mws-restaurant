@@ -186,6 +186,7 @@ addMarkersToMap = (restaurants = self.restaurants) => {
  */
 registerServiceWorker = () => {
   if ('serviceWorker' in navigator) {
+    openDatabase();
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('/sw.js').then(function(registration) {
         console.log('Service worker registered! Scope:', registration.scope);
@@ -196,6 +197,18 @@ registerServiceWorker = () => {
   } else {
     console.log('Service workers are not supported.');
   }
+}
+
+openDatabase = () => {
+  if (!'serviceWorker' in navigator) {
+    return Promise.resolve();
+  }
+
+  return idb.open('mws-restaurant', 1, function(upgradeDb) {
+    var store = upgradeDb.createObjectStore('restaurants', {
+      keyPath: 'name'
+    });
+  });
 }
 
 registerServiceWorker();

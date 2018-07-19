@@ -199,16 +199,4 @@ registerServiceWorker = () => {
   }
 }
 
-openDatabase = () => {
-  if (!'serviceWorker' in navigator) {
-    return Promise.resolve();
-  }
-
-  return idb.open('mws-restaurant', 1, function(upgradeDb) {
-    var store = upgradeDb.createObjectStore('restaurants', {
-      keyPath: 'name'
-    });
-  });
-}
-
 registerServiceWorker();

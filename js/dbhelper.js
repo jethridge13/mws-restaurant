@@ -21,6 +21,11 @@ class DBHelper {
       return response.json();
     })
     .then(function(json) {
+      DBHelper.openDatabase().then(function(db) {
+        const tx = db.transaction(['misc'], 'readwrite');
+        const store = tx.objectStore('misc');
+        store.put(json);
+      });
       callback(null, json);
     })
     .catch(error => {
@@ -38,6 +43,13 @@ class DBHelper {
       return response.json();
     })
     .then(function(json) {
+      // Put request into object store
+
+      DBHelper.openDatabase().then(function(db) {
+        const tx = db.transaction(['restaurants'], 'readwrite');
+        const store = tx.objectStore('restaurants');
+        store.put(json);
+      });
       callback(null, json);
     })
     .catch(error => {
@@ -161,6 +173,22 @@ class DBHelper {
       animation: google.maps.Animation.DROP}
     );
     return marker;
+  }
+
+  static openDatabase() {
+    if (!'serviceWorker' in navigator) {
+      return Promise.resolve();
+    }
+  
+    return idb.open('mws-restaurant', 1, function(upgradeDb) {
+      const restaurants = upgradeDb.createObjectStore('restaurants', {
+        keyPath: 'name'
+      });
+
+      const misc = upgradeDb.createObjectStore('misc', {
+        autoIncrement: true
+      });
+    });
   }
 
 }

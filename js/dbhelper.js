@@ -16,6 +16,19 @@ class DBHelper {
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
+    DBHelper.openDatabase().then(function(db) {
+      const store = db.transaction(['misc']).objectStore('misc');
+      // TODO Consider getting by index instead of using getAll()
+      store.getAll().then(function(data) {
+        if (data.length > 0) {
+          console.log('Returning cached restaurants');
+          console.log(data[0]);
+          callback(null, data[0]);
+          return;
+        }
+      });
+    });
+
     fetch(DBHelper.DATABASE_URL)
     .then(function(response) {
       return response.json();
@@ -24,7 +37,11 @@ class DBHelper {
       DBHelper.openDatabase().then(function(db) {
         const tx = db.transaction(['misc'], 'readwrite');
         const store = tx.objectStore('misc');
-        store.put(json);
+        store.getAll().then(function(data) {
+          if (data.length === 0) {
+            store.put(json);
+          }
+        })
       });
       callback(null, json);
     })

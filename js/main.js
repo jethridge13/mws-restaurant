@@ -179,9 +179,15 @@ addMarkersToMap = (restaurants = self.restaurants, static = true) => {
     const lng = -73.987501;
     const zoom = 12;
     const key = 'AIzaSyCZrFBCrmeqZztSGeC4MmUxqJgT63L_3lo';
+
+    let markers = '';
+    restaurants.forEach(x => {
+      markers += `&markers=color:red%7C${x.latlng.lat},${x.latlng.lng}`;
+    });
     let staticMapSrc = 
     `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}`;
     staticMapSrc += `&zoom=${zoom}&size=800x600&maptype=roadmap&key=${key}`;
+    staticMapSrc += markers;
 
     document.getElementById('static-map').src = staticMapSrc;
   } else {

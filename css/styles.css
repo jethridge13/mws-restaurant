@@ -109,6 +109,7 @@ nav h1 a {
   height: 400px;
   width: 100%;
   background-color: #ccc;
+  display: none;
 }
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {

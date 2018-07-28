@@ -111,6 +111,10 @@ nav h1 a {
   background-color: #ccc;
   display: none;
 }
+
+#static-map {
+  margin: 0px calc(50% - 325px);
+}
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
   width: 100%;
@@ -385,6 +389,11 @@ nav h1 a {
 
   #restaurant-name {
     text-align: center;
+  }
+
+  #static-map {
+    width: 100%;
+    margin: auto;
   }
 
 }

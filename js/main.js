@@ -184,10 +184,10 @@ addMarkersToMap = (restaurants = self.restaurants, static = true) => {
     restaurants.forEach(x => {
       markers += `&markers=color:red%7C${x.latlng.lat},${x.latlng.lng}`;
     });
-    let staticMapSrc = 
-    `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}`;
-    staticMapSrc += `&zoom=${zoom}&size=800x600&maptype=roadmap&key=${key}`;
-    staticMapSrc += markers;
+    const staticMapSrc = 
+    `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}`
+    +`&zoom=${zoom}&size=800x650&maptype=roadmap&key=${key}`
+    + markers;
 
     document.getElementById('static-map').src = staticMapSrc;
   } else {

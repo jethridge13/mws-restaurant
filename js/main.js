@@ -72,18 +72,15 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
-  let loc = {
+  const loc = {
     lat: 40.722216,
     lng: -73.987501
   };
-  /*
   self.map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     center: loc,
     scrollwheel: false
   });
-  */
-  updateRestaurants();
 }
 
 /**
@@ -219,9 +216,19 @@ registerServiceWorker = () => {
   }
 }
 
+addSwitchMapListener = () => {
+  staticMap = document.getElementById('static-map');
+  staticMap.addEventListener('click', () => {
+    staticMap.style.display = 'none';
+    initMap();
+    document.getElementById('map').style.display = 'block';
+  });
+}
+
 registerServiceWorker();
 
 window.onload = () => {
-  initMap();
+  updateRestaurants();
+  addSwitchMapListener();
 }
 

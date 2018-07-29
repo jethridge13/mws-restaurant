@@ -10,7 +10,8 @@ self.addEventListener('install', function(event) {
 		'data/restaurants.json',
 		'css/styles.css',
 		'index.html',
-		'restaurant.html'
+		'restaurant.html',
+		'manifest.webmanifest'
 	];
 	event.waitUntil(
 		caches.open('mws-restaurant-v1').then(function(cache) {

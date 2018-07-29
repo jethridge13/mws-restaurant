@@ -25,10 +25,10 @@
     <section>
       <div class="filter-options">
         <h2>Filter Results</h2>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-label="Neighborhoods">
           <option value="all">All Neighborhoods</option>
         </select>
-        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-label="Cuisines">
           <option value="all">All Cuisines</option>
         </select>
       </div>
@@ -40,11 +40,11 @@
   </script>
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
-  <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZrFBCrmeqZztSGeC4MmUxqJgT63L_3lo&libraries=places&callback=initMap"></script>-->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZrFBCrmeqZztSGeC4MmUxqJgT63L_3lo&libraries=places&callback=initMap"></script>
 
 
   <footer id="footer">
-    Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+    Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
 
 </body>

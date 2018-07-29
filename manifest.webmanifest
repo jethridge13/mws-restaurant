@@ -1,0 +1,9 @@
+{
+	"name": "MWS-Restaurant",
+	"short_name": "MWS-Restaurant",
+	"start_url": "index.html",
+	"display": "standalone",
+	"description": "My restaurant project for the Udacity Mobile Web Specialist nanodegree",
+	"lang": "en-US",
+	"theme_color": "#252831"
+}

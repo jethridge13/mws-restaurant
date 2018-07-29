@@ -219,8 +219,9 @@ registerServiceWorker = () => {
   }
 }
 
+registerServiceWorker();
+
 window.onload = () => {
   initMap();
-  registerServiceWorker();
 }
 

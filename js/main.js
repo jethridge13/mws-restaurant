@@ -178,6 +178,7 @@ addMarkersToMap = (restaurants = self.restaurants, static = true) => {
     const key = 'AIzaSyCZrFBCrmeqZztSGeC4MmUxqJgT63L_3lo';
 
     let markers = '';
+    console.log(restaurants);
     restaurants.forEach(x => {
       markers += `&markers=color:red%7C${x.latlng.lat},${x.latlng.lng}`;
     });
@@ -221,6 +222,7 @@ addSwitchMapListener = () => {
   staticMap.addEventListener('click', () => {
     staticMap.style.display = 'none';
     initMap();
+    addMarkersToMap(self.restaurants, false);
     document.getElementById('map').style.display = 'block';
   });
 }

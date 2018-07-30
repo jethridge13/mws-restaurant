@@ -174,15 +174,18 @@ class DBHelper {
   /**
    * Restaurant image URL.
    */
-  static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}.jpg`);
+  static imageUrlForRestaurant(restaurant, type='jpg') {
+    if (type === 'webp') {
+      return (`/img/dist/webp/${restaurant.photograph}.webp`);
+    }
+    return (`/img/dist/${restaurant.photograph}.jpg`);
   }
 
   /**
    * Placeholder image URL.
    */
   static placeholderImageUrl() {
-    return ('/img/undefined.jpg');
+    return DBHelper.imageUrlForRestaurant({'photograph': 'undefined'});
   }
 
   /**

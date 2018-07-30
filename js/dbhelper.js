@@ -179,6 +179,13 @@ class DBHelper {
   }
 
   /**
+   * Placeholder image URL.
+   */
+  static placeholderImageUrl() {
+    return ('/img/undefined.jpg');
+  }
+
+  /**
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {

@@ -140,8 +140,19 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  if (restaurant.photograph) {
+    image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  } else {
+    image.src = DBHelper.placeholderImageUrl();
+  }
   image.alt = `Image of ${restaurant.name} Restaurant`;
+  image.addEventListener('error', function handler(error) {
+    // Remove event handler. In case of extreme error and
+    // the placeholder can't be found, this will avoid an
+    // infinite loop.
+    image.src = DBHelper.placeholderImageUrl();
+    image.removeEventListener('error', handler);
+  });
   li.append(image);
 
   const name = document.createElement('h2');

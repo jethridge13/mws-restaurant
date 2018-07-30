@@ -1,0 +1,24 @@
+{
+  "name": "mws-restaurant",
+  "version": "1.0.0",
+  "description": "My project for the Udacity Mobile Web Specialist nanodegree.",
+  "main": "js/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jethridge13/mws-restaurant.git"
+  },
+  "author": "Josh Ethridge",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jethridge13/mws-restaurant/issues"
+  },
+  "homepage": "https://github.com/jethridge13/mws-restaurant#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-webp": "^3.0.0"
+  }
+}

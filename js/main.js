@@ -138,6 +138,14 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
+  // Create parent picture element
+  const picture = document.createElement('picture');
+
+  const webpSource = document.createElement('source');
+  webpSource.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'webp');
+  webpSource.type = 'image/webp';
+
+  // Create fallback image element
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   if (restaurant.photograph) {
@@ -153,7 +161,10 @@ createRestaurantHTML = (restaurant) => {
     image.src = DBHelper.placeholderImageUrl();
     image.removeEventListener('error', handler);
   });
-  li.append(image);
+
+  picture.append(webpSource);
+  picture.append(image);
+  li.append(picture);
 
   const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
@@ -229,6 +240,9 @@ registerServiceWorker = () => {
 }
 
 addSwitchMapListener = () => {
+  // Idea behind switching maps attributed to Lorenzo Zaccagnini
+  // https://medium.com/@lorenzozaccagnini/improve-google-map-performance-in-your-pwa-fe24a6b3a37b
+  // Implementation is entirely my own.
   staticMap = document.getElementById('static-map');
   staticMap.addEventListener('click', () => {
     staticMap.style.display = 'none';

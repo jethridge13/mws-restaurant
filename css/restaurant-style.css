@@ -1,0 +1,10 @@
+#static-map {
+	margin: 0;
+}
+
+@media screen and (min-width: 650px) and (max-width: 1000px) ,
+screen and (min-width: 1275px) {
+	#static-map {
+  		margin: 0px calc(50% - 325px);
+	}
+}

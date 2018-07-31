@@ -184,4 +184,20 @@ registerServiceWorker = () => {
   }
 }
 
+addSwitchMapListener = () => {
+  // Idea behind switching maps attributed to Lorenzo Zaccagnini
+  // https://medium.com/@lorenzozaccagnini/improve-google-map-performance-in-your-pwa-fe24a6b3a37b
+  // Implementation is entirely my own.
+  staticMap = document.getElementById('static-map');
+  staticMap.addEventListener('click', () => {
+    staticMap.style.display = 'none';
+    DBHelper.mapMarkerForRestaurant(self.restaurant, self.map, false);
+    document.getElementById('map').style.display = 'block';
+  });
+}
+
 registerServiceWorker();
+
+window.onload = () => {
+  addSwitchMapListener();
+}

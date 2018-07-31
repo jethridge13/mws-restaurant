@@ -1,3 +1,6 @@
+// Written and maintained by Jake Archibald
+// https://github.com/jakearchibald/idb
+
 'use strict';
 
 (function() {

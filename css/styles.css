@@ -95,7 +95,7 @@ nav h1 a {
 
 /* Add a color to all links inside the list */
 #breadcrumb ol li a {
-    color: #0275d8;
+    color: #024d92;
     text-decoration: none;
 }
 
@@ -222,7 +222,7 @@ nav h1 a {
   width: 50%;
 }
 #restaurant-name {
-  color: #f18200;
+  color: #ff9d2e;
   background: #252831;
   font-family: Arial,sans-serif;
   font-size: 20pt;

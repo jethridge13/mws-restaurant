@@ -191,16 +191,15 @@ createRestaurantHTML = (restaurant) => {
 /**
  * Add markers for current restaurants to the map.
  */
-addMarkersToMap = (restaurants = self.restaurants, static = true) => {
+addMarkersToMap = (restaurants = self.restaurants, staticMap = true) => {
   // TODO Add for static map
-  if (static) {
+  if (staticMap) {
     const lat = 40.722216;
     const lng = -73.987501;
     const zoom = 12;
     const key = 'AIzaSyCZrFBCrmeqZztSGeC4MmUxqJgT63L_3lo';
 
     let markers = '';
-    console.log(restaurants);
     restaurants.forEach(x => {
       markers += `&markers=color:red%7C${x.latlng.lat},${x.latlng.lng}`;
     });

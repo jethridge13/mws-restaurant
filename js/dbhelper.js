@@ -191,15 +191,30 @@ class DBHelper {
   /**
    * Map marker for a restaurant.
    */
-  static mapMarkerForRestaurant(restaurant, map) {
-    const marker = new google.maps.Marker({
-      position: restaurant.latlng,
-      title: restaurant.name,
-      url: DBHelper.urlForRestaurant(restaurant),
-      map: map,
-      animation: google.maps.Animation.DROP}
-    );
-    return marker;
+  static mapMarkerForRestaurant(restaurant, map, staticMap=true) {
+    if (staticMap) {
+      const staticMap = document.getElementById('static-map');
+      const lat = restaurant.latlng.lat;
+      const lng = restaurant.latlng.lng;
+      const zoom = 16;
+      const key = 'AIzaSyCZrFBCrmeqZztSGeC4MmUxqJgT63L_3lo';
+
+      const staticMapSrc = 
+      `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}`
+      + `&zoom=${zoom}&size=800x650&maptype=roadmap&key=${key}`
+      + `&markers=color:red%7C${lat},${lng}`;
+
+      staticMap.src = staticMapSrc;
+    } else {
+      const marker = new google.maps.Marker({
+        position: restaurant.latlng,
+        title: restaurant.name,
+        url: DBHelper.urlForRestaurant(restaurant),
+        map: map,
+        animation: google.maps.Animation.DROP}
+      );
+      return marker;
+    }
   }
 
   static openDatabase() {

@@ -400,6 +400,13 @@ nav h1 a {
 }
 
 @media screen and (max-width: 425px) {
+  
+  nav h1 a {
+    font-size: 0.9rem;
+    display: block;
+    line-height: 1.4rem;
+  }
+
   .filter-options {
     flex-direction: column;
     height: 120px;

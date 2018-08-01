@@ -212,7 +212,7 @@ addMarkersToMap = (restaurants = self.restaurants, staticMap = true) => {
   } else {
     restaurants.forEach(restaurant => {
       // Add marker to the map
-      const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
+      const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map, false);
       google.maps.event.addListener(marker, 'click', () => {
         window.location.href = marker.url
       });

@@ -21,8 +21,6 @@ class DBHelper {
       // TODO Consider getting by index instead of using getAll()
       store.getAll().then(function(data) {
         if (data.length > 0) {
-          console.log('Returning cached restaurants');
-          console.log(data[0]);
           callback(null, data[0]);
           return;
         }
@@ -55,6 +53,15 @@ class DBHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
+    DBHelper.openDatabase().then(function(db) {
+      const store = db.transaction(['restaurants']).objectStore('restaurants');
+      store.get(parseInt(id)).then(function(data) {
+        if (data) {
+          callback(null, data);
+          return;
+        }
+      });
+    })
     fetch(`${DBHelper.DATABASE_URL}/${id}`)
     .then(function(response) {
       return response.json();
@@ -224,7 +231,7 @@ class DBHelper {
   
     return idb.open('mws-restaurant', 1, function(upgradeDb) {
       const restaurants = upgradeDb.createObjectStore('restaurants', {
-        keyPath: 'name'
+        keyPath: 'id'
       });
 
       const misc = upgradeDb.createObjectStore('misc', {

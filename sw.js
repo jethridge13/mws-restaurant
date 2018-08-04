@@ -8,7 +8,6 @@ self.addEventListener('install', function(event) {
 		'js/restaurant_info.js',
 		'js/idb.js',
 		'data/restaurants.json',
-		'css/styles.css',
 		'index.html',
 		'restaurant.html',
 		'manifest.webmanifest'

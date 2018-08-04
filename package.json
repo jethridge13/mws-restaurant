@@ -18,7 +18,10 @@
   "homepage": "https://github.com/jethridge13/mws-restaurant#readme",
   "devDependencies": {
     "gulp": "^4.0.0",
+    "gulp-gm": "0.0.9",
     "gulp-imagemin": "^4.1.0",
+    "gulp-inject-css": "^1.0.0",
+    "gulp-style-inject": "^0.1.1",
     "gulp-webp": "^3.0.0"
   }
 }

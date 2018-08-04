@@ -142,14 +142,15 @@ createRestaurantHTML = (restaurant) => {
   const picture = document.createElement('picture');
 
   const webpSource = document.createElement('source');
-  webpSource.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'webp');
+  webpSource.srcset = DBHelper.imageSmallUrlForRestaurant(restaurant, 'webp');
   webpSource.type = 'image/webp';
 
   // Create fallback image element
   const image = document.createElement('img');
   image.className = 'restaurant-img';
+  // TODO Lazy loading
   if (restaurant.photograph) {
-    image.src = DBHelper.imageUrlForRestaurant(restaurant);
+    image.src = DBHelper.imageSmallUrlForRestaurant(restaurant);
   } else {
     image.src = DBHelper.placeholderImageUrl();
   }

@@ -189,6 +189,16 @@ class DBHelper {
   }
 
   /**
+   * Small restaurant image URL.
+   */
+  static imageSmallUrlForRestaurant(restaurant, type='jpg') {
+    if (type === 'webp') {
+      return (`/img/dist/small/webp/${restaurant.photograph}.webp`);
+    }
+    return (`/img/dist/small/${restaurant.photograph}.jpg`);
+  }
+
+  /**
    * Placeholder image URL.
    */
   static placeholderImageUrl() {

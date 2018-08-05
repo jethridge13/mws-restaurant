@@ -1,6 +1,7 @@
 let restaurants,
   neighborhoods,
-  cuisines
+  cuisines,
+  observer
 var map
 var markers = []
 
@@ -144,6 +145,7 @@ createRestaurantHTML = (restaurant) => {
   const webpSource = document.createElement('source');
   webpSource.srcset = DBHelper.imageSmallUrlForRestaurant(restaurant, 'webp');
   webpSource.type = 'image/webp';
+  webpSource['data-fullsrc'] = DBHelper.imageUrlForRestaurant(restaurant, 'webp');
 
   // Create fallback image element
   const image = document.createElement('img');
@@ -151,6 +153,7 @@ createRestaurantHTML = (restaurant) => {
   // TODO Lazy loading
   if (restaurant.photograph) {
     image.src = DBHelper.imageSmallUrlForRestaurant(restaurant);
+    image['data-fullsrc'] = DBHelper.imageUrlForRestaurant(restaurant);
   } else {
     image.src = DBHelper.placeholderImageUrl();
   }
@@ -162,6 +165,11 @@ createRestaurantHTML = (restaurant) => {
     image.src = DBHelper.placeholderImageUrl();
     image.removeEventListener('error', handler);
   });
+
+  if (!observer) {
+    registerObserver();
+  }
+  observer.observe(picture);
 
   picture.append(webpSource);
   picture.append(image);
@@ -253,6 +261,33 @@ addSwitchMapListener = () => {
 }
 
 registerServiceWorker();
+
+handleIntersection = (entries) => {
+  // TODO Remove element from observer after it is called once.
+  // There is no reason for it to be called a second time.
+  // All code is my own original work. The following links were
+  // consulted when working on it.
+  // https://developers.google.com/web/updates/2016/04/intersectionobserver
+  // https://scotch.io/tutorials/lazy-loading-images-for-performance-using-intersection-observer
+  entries.forEach(entry => {
+    if (entry.isIntersecting && entry.target.nodeName === 'PICTURE') {
+      Array.from(entry.target.children).forEach(child => {
+        if (child['data-fullsrc'] && child.src) {
+          child.src = child['data-fullsrc'];
+        } else if (child['data-fullsrc'] && child.srcset) {
+          child.srcset = child['data-fullsrc'];
+        }
+      });
+    }
+  })
+}
+
+registerObserver = () => {
+  const options = {
+    threshold: 0.2
+  };
+  observer = new IntersectionObserver(handleIntersection, options);
+}
 
 window.onload = () => {
   updateRestaurants();

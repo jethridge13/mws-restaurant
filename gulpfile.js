@@ -6,7 +6,7 @@ const styleInject = require('gulp-style-inject');
 const injectCSS = require('gulp-inject-css');
 
 gulp.task('default', () => {
-	// TODO
+	// TODO Break these up into their own tasks
 	gulp.src('img/src/*')
 		.pipe(imagemin([
 			imagemin.jpegtran({progressive: true})

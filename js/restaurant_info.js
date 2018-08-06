@@ -1,4 +1,5 @@
-let restaurant;
+let restaurant,
+  observer;
 var map;
 
 /**
@@ -56,13 +57,28 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   address.innerHTML = restaurant.address;
 
   const source = document.getElementById('restaurant-pic');
-  source.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'webp');
+  source.srcset = DBHelper.imageSmallUrlForRestaurant(restaurant, 'webp');
   source.type = 'image/webp';
+  source['data-fullsrc'] = DBHelper.imageUrlForRestaurant(restaurant, 'webp');
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  if (restaurant.photograph) {
+    image.src = DBHelper.imageSmallUrlForRestaurant(restaurant);
+    image['data-fullsrc'] = DBHelper.imageUrlForRestaurant;
+  } else {
+    image.src = DBHelper.placeholderImageUrl();
+  }
   image.alt = `Image of ${restaurant.name} Restaurant`;
+  image.addEventListener('error', function handler(error) {
+    image.src = DBHelper.placeholderImageUrl();
+    image.removeEventListener('error', handler);
+  });
+
+  if (!observer) {
+    observer = DBHelper.registerObserver();
+  }
+  observer.observe(source.parentElement);
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;

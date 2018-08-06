@@ -250,4 +250,33 @@ class DBHelper {
     });
   }
 
+  static handleIntersection(entries) {
+  // TODO Remove element from observer after it is called once.
+  // There is no reason for it to be called a second time.
+  // All code is my own original work. The following links were
+  // consulted when working on it.
+  // https://developers.google.com/web/updates/2016/04/intersectionobserver
+  // https://scotch.io/tutorials/lazy-loading-images-for-performance-using-intersection-observer
+  entries.forEach(entry => {
+      if (entry.isIntersecting && entry.target.nodeName === 'PICTURE') {
+        Array.from(entry.target.children).forEach(child => {
+          if (child['data-fullsrc'] && child.src) {
+            child.src = child['data-fullsrc'];
+          } else if (child['data-fullsrc'] && child.srcset) {
+            child.srcset = child['data-fullsrc'];
+          }
+        });
+      }
+    })
+  }
+
+  static registerObserver() {
+    const options = {
+      threshold: 0.2
+    };
+    let observer = new IntersectionObserver(DBHelper.handleIntersection, options);
+    return observer
+  }
+
+
 }

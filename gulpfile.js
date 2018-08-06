@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 const gm = require('gulp-gm');
-const styleInject = require('gulp-style-inject');
 const injectCSS = require('gulp-inject-css');
 
 gulp.task('default', () => {

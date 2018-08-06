@@ -150,7 +150,6 @@ createRestaurantHTML = (restaurant) => {
   // Create fallback image element
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  // TODO Lazy loading
   if (restaurant.photograph) {
     image.src = DBHelper.imageSmallUrlForRestaurant(restaurant);
     image['data-fullsrc'] = DBHelper.imageUrlForRestaurant(restaurant);
@@ -167,7 +166,7 @@ createRestaurantHTML = (restaurant) => {
   });
 
   if (!observer) {
-    registerObserver();
+    observer = DBHelper.registerObserver();
   }
   observer.observe(picture);
 
@@ -261,33 +260,6 @@ addSwitchMapListener = () => {
 }
 
 registerServiceWorker();
-
-handleIntersection = (entries) => {
-  // TODO Remove element from observer after it is called once.
-  // There is no reason for it to be called a second time.
-  // All code is my own original work. The following links were
-  // consulted when working on it.
-  // https://developers.google.com/web/updates/2016/04/intersectionobserver
-  // https://scotch.io/tutorials/lazy-loading-images-for-performance-using-intersection-observer
-  entries.forEach(entry => {
-    if (entry.isIntersecting && entry.target.nodeName === 'PICTURE') {
-      Array.from(entry.target.children).forEach(child => {
-        if (child['data-fullsrc'] && child.src) {
-          child.src = child['data-fullsrc'];
-        } else if (child['data-fullsrc'] && child.srcset) {
-          child.srcset = child['data-fullsrc'];
-        }
-      });
-    }
-  })
-}
-
-registerObserver = () => {
-  const options = {
-    threshold: 0.2
-  };
-  observer = new IntersectionObserver(handleIntersection, options);
-}
 
 window.onload = () => {
   updateRestaurants();

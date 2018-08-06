@@ -7,6 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#252831">
   <title>Restaurant Reviews</title>
+  <script async type="application/javascript" charset="utf-8" src="js/idb.js">
+  </script>
+  <script async type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
+  <script async type="application/javascript" charset="utf-8" src="js/main.js"></script>
     <style>
 @charset "utf-8";
 /* CSS Document */
@@ -456,10 +460,7 @@ nav h1 a {
     </section>
   </main>
 
-  <script type="application/javascript" charset="utf-8" src="js/idb.js">
-  </script>
-  <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
-  <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+  <!-- TODO Defer this to when it's actually used to vastly improve performance -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZrFBCrmeqZztSGeC4MmUxqJgT63L_3lo&libraries=places&callback=initMap"></script>
 
 

@@ -200,7 +200,6 @@ createRestaurantHTML = (restaurant) => {
  * Add markers for current restaurants to the map.
  */
 addMarkersToMap = (restaurants = self.restaurants, staticMap = true) => {
-  // TODO Add for static map
   if (staticMap) {
     const lat = 40.722216;
     const lng = -73.987501;

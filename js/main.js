@@ -77,6 +77,7 @@ window.initMap = () => {
     lat: 40.722216,
     lng: -73.987501
   };
+
   self.map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     center: loc,
@@ -251,10 +252,20 @@ addSwitchMapListener = () => {
   // Implementation is entirely my own.
   staticMap = document.getElementById('static-map');
   staticMap.addEventListener('click', () => {
-    staticMap.style.display = 'none';
-    initMap();
-    addMarkersToMap(self.restaurants, false);
-    document.getElementById('map').style.display = 'block';
+    // Load script
+    const script = document.createElement('script');
+    script.src= 'https://maps.googleapis.com/maps/api/js?' +
+    'key=AIzaSyCZrFBCrmeqZztSGeC4MmUxqJgT63L_3lo&libraries=places' +
+    '&callback=initMap';
+    script.addEventListener('load', () => {
+      staticMap.style.display = 'none';
+      initMap();
+      addMarkersToMap(self.restaurants, false);
+      document.getElementById('map').style.display = 'block';
+    });
+
+    document.getElementsByTagName('head')[0].append(script);
+
   });
 }
 

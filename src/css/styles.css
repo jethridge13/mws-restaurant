@@ -419,4 +419,8 @@ nav h1 a {
   #restaurant-address, td {
     font-size: 1.2rem;
   }
+
+  #restaurant-container, #reviews-container {
+    padding: 85px 0px 30px;
+  }
 }

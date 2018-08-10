@@ -10,7 +10,8 @@ self.addEventListener('install', function(event) {
 		'data/restaurants.json',
 		'index.html',
 		'restaurant.html',
-		'manifest.webmanifest'
+		'manifest.webmanifest',
+		'http://localhost:1337/restaurants'
 	];
 	event.waitUntil(
 		caches.open('mws-restaurant-v1').then(function(cache) {
@@ -18,6 +19,8 @@ self.addEventListener('install', function(event) {
 		})
 	);
 });
+
+// TODO Cache restaurant page json when it appears?
 
 self.addEventListener('fetch', function(event) {
 	// restaurant.html caching inspired by Doug Brown's Project 1 Webinar

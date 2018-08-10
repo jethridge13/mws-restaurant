@@ -57,11 +57,11 @@ class DBHelper {
       const store = db.transaction(['restaurants']).objectStore('restaurants');
       store.get(parseInt(id)).then(function(data) {
         if (data) {
-          callback(null, data);
-          return;
+          return data;
         }
       });
     })
+
     fetch(`${DBHelper.DATABASE_URL}/${id}`)
     .then(function(response) {
       return response.json();

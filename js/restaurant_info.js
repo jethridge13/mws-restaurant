@@ -143,10 +143,21 @@ createReviewHTML = (review) => {
   name.innerHTML = review.name;
   li.appendChild(name);
 
-  // Update to created/updated date
-  const date = document.createElement('p');
-  date.innerHTML = review.date;
-  li.appendChild(date);
+  // Creation date
+  if (review.createdAt) {
+  	const date = document.createElement('p');
+  	date.innerHTML = `Posted: ${new Date(review.createdAt)}`;
+  	date.classList.add('review-date');
+  	li.appendChild(date);
+  }
+
+  // Last update
+  if (review.updatedAt && review.updatedAt !== review.createdAt) {
+  	const updatedDate = document.createElement('p');
+  	updatedDate.innerHTML = `Updated: ${new Date(review.updatedAt)}`;
+  	date.classList.add('review-date');
+  	li.appendChild(date);
+  }
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;

@@ -33,9 +33,16 @@ fetchRestaurantFromURL = (callback) => {
         console.error(error);
         return;
       }
-      fillBreadcrumb();
-      fillRestaurantHTML();
-      callback(null, restaurant)
+      if (!self.restaurant.reviews) {
+        restaurant.reviews = DBHelper.fetchReviews(self.restaurant.id, (error, reviews) => {
+          if (!error) {
+            self.restaurant.reviews = reviews;
+          }
+          fillBreadcrumb();
+          fillRestaurantHTML();
+          callback(null, restaurant)
+        });
+      }
     });
   }
 }
@@ -136,6 +143,7 @@ createReviewHTML = (review) => {
   name.innerHTML = review.name;
   li.appendChild(name);
 
+  // Update to created/updated date
   const date = document.createElement('p');
   date.innerHTML = review.date;
   li.appendChild(date);

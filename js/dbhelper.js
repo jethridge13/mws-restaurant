@@ -8,8 +8,13 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 1337 // Change this to your server port
+    const port = 1337
     return `http://localhost:${port}/restaurants`;
+  }
+
+  static get DATABASE_REVIEWS_URL() {
+    const port = 1337
+    return `http://localhost:${port}/reviews`;
   }
 
   /**
@@ -169,6 +174,24 @@ class DBHelper {
         callback(null, uniqueCuisines);
       }
     });
+  }
+
+  /**
+   * Fetch all of a restaurant's reviews by ID.
+   */
+  static fetchReviews(id, callback) {
+    fetch(DBHelper.DATABASE_REVIEWS_URL + `/?restaurant_id=${id}`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      // TODO Add this to idb cache
+      callback(null, json);
+    })
+    .catch(error => {
+      const errorResponse = (`Failed to fetch review from restaurant id: ${id}`);
+      callback(errorResponse, null);
+    })
   }
 
   /**

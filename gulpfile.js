@@ -54,7 +54,7 @@ gulp.task('default', () => {
 });
 
 gulp.task('html', () => {
-	return watch('src/*', () => {
+	return watch(['src/*', 'src/css/*'], () => {
 		injectCSSFunction();
 	});
 });

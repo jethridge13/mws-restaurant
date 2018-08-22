@@ -3,6 +3,7 @@ const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 const gm = require('gulp-gm');
 const injectCSS = require('gulp-inject-css');
+const watch = require('gulp-watch');
 
 const imageMinFunction = () => {
 	gulp.src('img/src/*')
@@ -49,5 +50,11 @@ gulp.task('default', () => {
 		webpFunction();
 		injectCSSFunction();
 		resolve();
+	});
+});
+
+gulp.task('html', () => {
+	return watch('src/*', () => {
+		injectCSSFunction();
 	});
 });

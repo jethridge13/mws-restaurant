@@ -439,12 +439,30 @@ nav h1 a {
 
 </style>
     <style>
+#review-submission-container {
+	width: 50%;
+}
+
 #static-map {
 	margin: 0;
 }
 
 .review-date {
 	font-size: 0.7rem;
+}
+
+form label {
+	width: 30%;
+}
+
+form input {
+	width: 70%;
+}
+
+@media screen and (max-width: 1000px) {
+	#review-submission-container {
+		width: 100%;
+	}
 }
 
 @media screen and (min-width: 650px) and (max-width: 1000px) ,
@@ -510,7 +528,6 @@ screen and (min-width: 1275px) {
     <!-- end review submission section -->
     <!-- Beginning reviews -->
     <section id="reviews-container">
-
       <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->

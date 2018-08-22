@@ -4,33 +4,50 @@ const webp = require('gulp-webp');
 const gm = require('gulp-gm');
 const injectCSS = require('gulp-inject-css');
 
-gulp.task('default', () => {
-	// TODO Break these up into their own tasks
+const imageMinFunction = () => {
 	gulp.src('img/src/*')
 		.pipe(imagemin([
 			imagemin.jpegtran({progressive: true})
 		]))
 		.pipe(gulp.dest('img/dist'))
+}
 
+const gmFunction = () => {
 	gulp.src('img/src/*')
 		.pipe(gm(function(gmfile) {
 			return gmfile.resize(5, 5);
 		}, {imageMagick: true}))
 		.pipe(gulp.dest('img/dist/small'));
+}
 
+const gmWebpFunction = () => {
 	gulp.src('img/src/*')
 		.pipe(gm(function(gmfile) {
 			return gmfile.resize(5, 5);
 		}, {imageMagick: true}))
 		.pipe(webp())
 		.pipe(gulp.dest('img/dist/small/webp'));
+}
 
-
+const webpFunction = () => {
 	gulp.src('img/src/*')
 		.pipe(webp())
 		.pipe(gulp.dest('img/dist/webp'))
+}
 
-	return gulp.src('src/*.html')
+const injectCSSFunction = () => {
+	gulp.src('src/*.html')
 		.pipe(injectCSS())
 		.pipe(gulp.dest('.'));
+}
+
+gulp.task('default', () => {
+	return new Promise((resolve, reject) => {
+		imageMinFunction();
+		gmFunction();
+		gmWebpFunction();
+		webpFunction();
+		injectCSSFunction();
+		resolve();
+	});
 });

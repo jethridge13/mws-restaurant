@@ -21,6 +21,7 @@
     "gulp-gm": "0.0.9",
     "gulp-imagemin": "^4.1.0",
     "gulp-inject-css": "^1.0.0",
+    "gulp-watch": "^5.0.1",
     "gulp-webp": "^3.0.0"
   }
 }

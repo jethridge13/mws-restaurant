@@ -10,12 +10,45 @@
 	font-size: 0.7rem;
 }
 
-form label {
-	width: 30%;
+button {
+	background-color: #8A470F;
+	border-bottom: 3px solid #eee;
+	color: #fff;
+	display: inline-block;
+	font-size: 10pt;
+	margin: 15px 0 0;
+	padding: 8px 30px 10px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
 }
 
-form input {
-	width: 70%;
+form {
+	background-color: #fff;
+ 	border: 2px solid #f3f3f3;
+ 	display: block;
+ 	list-style-type: none;
+ 	margin: 30px auto 30px auto;
+ 	overflow: hidden;
+ 	padding: 10px 20px 20px;
+ 	position: relative;
+ 	width: 85%;
+}
+
+form label {
+	width: 100%;
+	float: left;
+	text-align: left;
+}
+
+form textarea {
+	min-height: 100px;
+	resize: vertical;
+}
+
+form input, form textarea {
+	width: 80%;
+	float: left;
 }
 
 @media screen and (max-width: 1000px) {

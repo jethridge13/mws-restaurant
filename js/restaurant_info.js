@@ -184,6 +184,37 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   breadcrumb.appendChild(ol);
 }
 
+submitReview = (form) => {
+  // Get all form inputs
+  const reviewName = form.elements.namedItem('review-name');
+  const reviewRating = form.elements.namedItem('review-rating');
+  const reviewComments = form.elements.namedItem('review-comments');
+
+  // Rudimentary field validation
+  if (!(reviewName && reviewRating && reviewComments)) {
+    return false;
+  }
+  // TODO Refactor this to be more DRY.
+  if (!reviewName.value) {
+    displayMissingFieldModal(reviewName);
+    return false;
+  } else if (!reviewRating.value) {
+    displayMissingFieldModal(reviewRating);
+    return false;
+  } else if (!reviewComments.value) {
+    displayMissingFieldModal(reviewComments);
+    return false;
+  }
+
+  // Submit post
+  // TODO
+  return false;
+}
+
+displayMissingFieldModal = (input) => {
+
+}
+
 /**
  * Get a parameter by name from page URL.
  */

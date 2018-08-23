@@ -54,11 +54,11 @@
     <!-- Beginning review submission section -->
     <section id="review-submission-container">
       <h3>Submit a Review</h3>
-      <form id="user-review">
+      <form id="user-review" onsubmit="return submitReview(this);">
         <label for="review-name">Name</label>
         <input type="text" name="review-name" id="review-name">
         <label for="review-rating">Rating</label>
-        <input type="number" name="review-number" id="review-number">
+        <input type="number" name="review-rating" id="review-rating">
         <label for="review-comments">Comments</label>
         <textarea name="review-comments" form="user-review"></textarea>
         <button>Submit</button>

@@ -12,7 +12,7 @@
 
 button {
 	background-color: #8A470F;
-	border-bottom: 3px solid #eee;
+	border: none;
 	color: #fff;
 	display: inline-block;
 	font-size: 10pt;

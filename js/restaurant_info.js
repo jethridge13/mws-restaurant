@@ -189,8 +189,10 @@ submitReview = (form) => {
   const reviewName = form.elements.namedItem('review-name');
   const reviewRating = form.elements.namedItem('review-rating');
   const reviewComments = form.elements.namedItem('review-comments');
+  const restaurantID = self.restaurant.id;
 
   // Rudimentary field validation
+  // TODO Add more validation to rating
   if (!(reviewName && reviewRating && reviewComments)) {
     return false;
   }
@@ -206,8 +208,33 @@ submitReview = (form) => {
     return false;
   }
 
+  // Create POST content
+  const postData = {
+    'restaurant_id': restaurantID,
+    'name': reviewName.value,
+    'rating': reviewRating.value,
+    'comments': reviewComments.value
+  }
+
   // Submit post
-  // TODO
+  // TODO Move this to DBHelper
+  const postURL = 'http://localhost:1337/reviews'
+  fetch(postURL, {
+    method: 'POST',
+    body: JSON.stringify(postData),
+    headers : {'Content-Type': 'application/json'}
+  })
+  .then(response => {
+    return response.json();
+  })
+  .then(json => {
+    // TODO Confirm submission success
+    console.log(json);
+  })
+  .catch(error => {
+    // TODO Display error
+    console.log(error);
+  });
   return false;
 }
 

@@ -10,6 +10,29 @@
 	font-size: 0.7rem;
 }
 
+/* https://css-tricks.com/examples/ShapesOfCSS */
+.loader {
+	margin-auto
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-bottom: 100px solid #8A470F;
+	animation-name: loader-animation;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes loader-animation {
+	0%	{
+		transform: rotate(0deg);
+	}
+
+	50% {
+		transform: rotate(360deg);
+	}
+}
+
 button {
 	background-color: #8A470F;
 	border: none;

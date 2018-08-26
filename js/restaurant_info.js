@@ -217,24 +217,7 @@ submitReview = (form) => {
   }
 
   // Submit post
-  // TODO Move this to DBHelper
-  const postURL = 'http://localhost:1337/reviews'
-  fetch(postURL, {
-    method: 'POST',
-    body: JSON.stringify(postData),
-    headers : {'Content-Type': 'application/json'}
-  })
-  .then(response => {
-    return response.json();
-  })
-  .then(json => {
-    // TODO Confirm submission success
-    console.log(json);
-  })
-  .catch(error => {
-    // TODO Display error
-    console.log(error);
-  });
+  DBHelper.postRestaurantReview(postData);
   return false;
 }
 

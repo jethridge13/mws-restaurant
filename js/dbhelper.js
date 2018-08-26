@@ -257,6 +257,34 @@ class DBHelper {
     }
   }
 
+  /**
+   * POST a review to the database
+   */
+  static postRestaurantReview(postData) {
+    const postURL = 'http://localhost:1337/reviews'
+    fetch(postURL, {
+      method: 'POST',
+      body: JSON.stringify(postData),
+      headers : {'Content-Type': 'application/json'}
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => {
+      // TODO Confirm submission success
+      console.log(json);
+    })
+    .catch(error => {
+      // TODO Display error
+      console.log(error);
+      DBHelper.openDatabase().then(function(db) {
+        const tx = db.transaction(['offline-reviews'], 'readwrite');
+        const store = tx.objectStore('offline-reviews');
+        store.put(postData);
+      });
+    });
+  }
+
   static openDatabase() {
     if (!'serviceWorker' in navigator) {
       return Promise.resolve();
@@ -268,6 +296,10 @@ class DBHelper {
       });
 
       const misc = upgradeDb.createObjectStore('misc', {
+        autoIncrement: true
+      });
+
+      const offlineReviews = upgradeDb.createObjectStore('offline-reviews', {
         autoIncrement: true
       });
     });

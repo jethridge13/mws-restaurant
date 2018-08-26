@@ -260,7 +260,7 @@ class DBHelper {
   /**
    * POST a review to the database
    */
-  static postRestaurantReview(postData) {
+  static postRestaurantReview(postData, callback) {
     const postURL = 'http://localhost:1337/reviews'
     fetch(postURL, {
       method: 'POST',
@@ -273,15 +273,15 @@ class DBHelper {
     .then(json => {
       // TODO Confirm submission success
       console.log(json);
+      callback(null, json);
     })
     .catch(error => {
-      // TODO Display error
-      console.log(error);
       DBHelper.openDatabase().then(function(db) {
         const tx = db.transaction(['offline-reviews'], 'readwrite');
         const store = tx.objectStore('offline-reviews');
         store.put(postData);
       });
+      callback(error, null);
     });
   }
 

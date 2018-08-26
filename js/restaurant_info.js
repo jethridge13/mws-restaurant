@@ -214,6 +214,7 @@ submitReview = (form) => {
   
   const loader = document.createElement('div');
   loader.classList.add('loader');
+  loader.id = ('review-loader');
 
   document.getElementById('review-submission-container').append(loader);
 
@@ -226,12 +227,51 @@ submitReview = (form) => {
   }
 
   // Submit post
-  DBHelper.postRestaurantReview(postData);
+  DBHelper.postRestaurantReview(postData, (error, response) => {
+    if (error) {
+      // TODO Display error
+      console.log(error)
+      return false;
+    }
+    console.log(response);
+    removeReviewLoader();
+    displayReviewSubmissionSuccess();
+    displayRecentlySubmittedReview(postData);
+  });
   return false;
+}
+
+displayReviewModal = () => {
+  // TODO
 }
 
 displayMissingFieldModal = (input) => {
   // TODO
+}
+
+displayReviewSubmissionSuccess = () => {
+  // TODO
+}
+
+displayRecentlySubmittedReview = (reviewData) => {
+  // TODO
+}
+
+/**
+ * Removes the loader that is displayed after submitting a review
+ * Returns true if loader removed, otherwise returns false.
+ */
+removeReviewLoader = () => {
+  const reviewLoader = document.getElementById('review-loader');
+  if (reviewLoader) {
+    reviewLoader.parentNode.removeChild(reviewLoader);
+    document.getElementById('review-name').value = '';
+    document.getElementById('review-rating').value = '';
+    document.getElementById('review-comments').value = '';
+    document.getElementById('review-submission').style.display = 'block';
+    return true;
+  }
+  return false;
 }
 
 /**

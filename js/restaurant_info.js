@@ -208,6 +208,15 @@ submitReview = (form) => {
     return false;
   }
 
+  // Show spinner icon
+  const reviewDiv = document.getElementById('review-submission');
+  reviewDiv.style.display = 'none';
+  
+  const loader = document.createElement('div');
+  loader.classList.add('loader');
+
+  document.getElementById('review-submission-container').append(loader);
+
   // Create POST content
   const postData = {
     'restaurant_id': restaurantID,
@@ -222,7 +231,7 @@ submitReview = (form) => {
 }
 
 displayMissingFieldModal = (input) => {
-
+  // TODO
 }
 
 /**

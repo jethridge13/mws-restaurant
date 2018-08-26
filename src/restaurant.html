@@ -53,16 +53,18 @@
     <!-- end restaurant -->
     <!-- Beginning review submission section -->
     <section id="review-submission-container">
-      <h3>Submit a Review</h3>
-      <form id="user-review" onsubmit="return submitReview(this);">
-        <label for="review-name">Name</label>
-        <input type="text" name="review-name" id="review-name">
-        <label for="review-rating">Rating</label>
-        <input type="number" name="review-rating" id="review-rating">
-        <label for="review-comments">Comments</label>
-        <textarea name="review-comments" form="user-review"></textarea>
-        <button>Submit</button>
-      </form>
+        <h3>Submit a Review</h3>
+        <div id="review-submission">
+        <form id="user-review" onsubmit="return submitReview(this);">
+          <label for="review-name">Name</label>
+          <input type="text" name="review-name" id="review-name">
+          <label for="review-rating">Rating</label>
+          <input type="number" name="review-rating" id="review-rating">
+          <label for="review-comments">Comments</label>
+          <textarea name="review-comments" form="user-review"></textarea>
+          <button>Submit</button>
+        </form>
+      </div>
     </section>
     <!-- end review submission section -->
     <!-- Beginning reviews -->

@@ -241,8 +241,55 @@ submitReview = (form) => {
   return false;
 }
 
-displayReviewModal = () => {
-  // TODO
+/**
+ * Function to display a modal with various options on the review section
+ */
+displayReviewModal = (options) => {
+  // TODO For robustness, add type checking
+  /**
+   * options: {
+   *    title: 'Modal title',
+   *    imageElement: HTMLElementObject,
+   *    details: 'A bunch of text to display at the button'
+   *  }
+   */
+  const reviewModal = document.createElement('div');
+  reviewModal.classList.add('review-modal');
+  reviewModal.id = 'review-modal';
+
+  // Add title to modal
+  if (options.title) {
+    const modalTitle = document.createElement('h3');
+    modalTitle.innerHTML = options.title;
+    modalTitle.classList.add('review-modal-title');
+    reviewModal.append(modalTitle);
+  }
+
+  // Add image to modal
+  if (options.imageElement) {
+    reviewModal.append(options.imageElement);
+  }
+
+  // Add comments to modal
+  if (options.details) {
+    const modalDetails = document.createElement('p');
+    modalDetails.innerHTML = options.details;
+    modalDetails.classList.add('review-modal-details');
+    reviewModal.append(modalDetails);
+  }
+
+  // Add confirmation button
+  const modalConfirm = document.createElement('button');
+  modalConfirm.innerHTML = 'OK';
+  modalConfirm.classList.add('review-modal-button');
+  modalConfirm.addEventListener('click', () => {
+    const reviewModal = document.getElementById('review-modal');
+    reviewModal.parentNode.removeChild(reviewModal);
+  });
+  reviewModal.append(modalConfirm);
+
+  // Add it all to review section
+  document.getElementById('review-submission-container').append(reviewModal);
 }
 
 displayMissingFieldModal = (input) => {
@@ -251,6 +298,16 @@ displayMissingFieldModal = (input) => {
 
 displayReviewSubmissionSuccess = () => {
   // TODO
+  const modalData = {
+    title: 'Review Submitted!',
+    details: 'Your review has been successfully submitted!'
+  }
+
+  const confirmationCheckmark = document.createElement('span');
+  confirmationCheckmark.innerHTML = '&#10003';
+  modalData.imageElement = confirmationCheckmark;
+
+  displayReviewModal(modalData);
 }
 
 displayRecentlySubmittedReview = (reviewData) => {

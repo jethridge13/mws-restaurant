@@ -30,14 +30,15 @@
 /* https://css-tricks.com/examples/ShapesOfCSS */
 .loader {
 	margin: auto;
-	width: 0;
-	height: 0;
-	border-left: 50px solid transparent;
-	border-right: 50px solid transparent;
-	border-bottom: 100px solid #8A470F;
+	width: 90px;
+	height: 45px;
 	animation-name: loader-animation;
 	animation-duration: 5s;
 	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	border-top-left-radius: 45px;
+	border-top-right-radius: 45px;
+	background: #252831;
 }
 
 @keyframes loader-animation {
@@ -45,7 +46,7 @@
 		transform: rotate(0deg);
 	}
 
-	50% {
+	100% {
 		transform: rotate(360deg);
 	}
 }

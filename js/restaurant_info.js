@@ -229,11 +229,10 @@ submitReview = (form) => {
   // Submit post
   DBHelper.postRestaurantReview(postData, (error, response) => {
     if (error) {
-      // TODO Display error
-      console.log(error)
+      removeReviewLoader();
+      displayReviewSubmissionError(error);
       return false;
     }
-    console.log(response);
     removeReviewLoader();
     displayReviewSubmissionSuccess();
     displayRecentlySubmittedReview(postData);
@@ -297,17 +296,31 @@ displayMissingFieldModal = (input) => {
 }
 
 displayReviewSubmissionSuccess = () => {
-  // TODO
   const modalData = {
     title: 'Review Submitted!',
     details: 'Your review has been successfully submitted!'
   }
 
   const confirmationCheckmark = document.createElement('span');
-  confirmationCheckmark.innerHTML = '&#10003';
+  confirmationCheckmark.innerHTML = '&#10004';
   confirmationCheckmark.style.fontSize = '100px';
   confirmationCheckmark.style.color = 'green';
   modalData.imageElement = confirmationCheckmark;
+
+  displayReviewModal(modalData);
+}
+
+displayReviewSubmissionError = (error) => {
+  const modalData = {
+    title: 'Error in Submitting Review',
+    details: 'There was an error in submitting your review. It has been saved and will be resubmitted when possible.'
+  }
+
+  const errorDisplay = document.createElement('span');
+  errorDisplay.innerHTML = '&#10008';
+  errorDisplay.style.fontSize = '100px';
+  errorDisplay.style.color = 'red';
+  modalData.imageElement = errorDisplay;
 
   displayReviewModal(modalData);
 }

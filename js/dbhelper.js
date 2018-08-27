@@ -271,8 +271,6 @@ class DBHelper {
       return response.json();
     })
     .then(json => {
-      // TODO Confirm submission success
-      console.log(json);
       callback(null, json);
     })
     .catch(error => {

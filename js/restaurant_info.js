@@ -327,6 +327,10 @@ displayReviewSubmissionError = (error) => {
 
 displayRecentlySubmittedReview = (reviewData) => {
   // TODO
+  const reviewsList = document.getElementById('reviews-list');
+  const newReview = createReviewHTML(reviewData);
+  newReview.style.backgroundColor = '#a4def1';
+  reviewsList.insertBefore(newReview, reviewsList.childNodes[0]);
 }
 
 /**

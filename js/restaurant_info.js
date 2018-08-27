@@ -305,6 +305,8 @@ displayReviewSubmissionSuccess = () => {
 
   const confirmationCheckmark = document.createElement('span');
   confirmationCheckmark.innerHTML = '&#10003';
+  confirmationCheckmark.style.fontSize = '100px';
+  confirmationCheckmark.style.color = 'green';
   modalData.imageElement = confirmationCheckmark;
 
   displayReviewModal(modalData);

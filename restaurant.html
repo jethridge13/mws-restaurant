@@ -441,6 +441,7 @@ nav h1 a {
     <style>
 #review-submission-container {
 	width: 50%;
+	position: relative;
 }
 
 #static-map {
@@ -449,6 +450,22 @@ nav h1 a {
 
 .review-date {
 	font-size: 0.7rem;
+}
+
+.review-modal {
+	position: absolute;
+	top: 0px;
+	padding: 20px;
+	width: calc(100% - 40px);
+	height: calc(100% - 40px);
+	background-image: linear-gradient(to bottom,
+		whitesmoke 0%, lightgrey 100%);
+}
+
+.review-modal-button {
+	position: absolute;
+	bottom: 20px;
+	margin: 15px 0 0 15px;
 }
 
 /* https://css-tricks.com/examples/ShapesOfCSS */
@@ -577,7 +594,7 @@ screen and (min-width: 1275px) {
           <label for="review-name">Name</label>
           <input type="text" name="review-name" id="review-name">
           <label for="review-rating">Rating</label>
-          <input type="number" name="review-rating" id="review-rating">
+          <input type="number" name="review-rating" id="review-rating" min="1" max="5">
           <label for="review-comments">Comments</label>
           <textarea name="review-comments" id="review-comments" form="user-review"></textarea>
           <button>Submit</button>

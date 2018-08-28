@@ -121,6 +121,8 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
+  // TODO Update date field for reviews just submitted
+  // TODO Add listener to remove different color indicating new review
   DBHelper.getReviewsPendingSubmission((error, reviews) => {
     // TODO Add a visual loader to inform user that there is
     // an attempt to upload old reviews
@@ -129,6 +131,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
       DBHelper.postRestaurantReview(review, (error, response) => {
         if (error) {
           // TODO Consider displaying this error
+          // TODO Display the non-submitted review with a pending color
           console.log(error);
         }
         displayRecentlySubmittedReview(review);

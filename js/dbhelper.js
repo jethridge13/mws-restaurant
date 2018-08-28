@@ -283,6 +283,23 @@ class DBHelper {
     });
   }
 
+  /**
+   * Get all reviews pending submission
+   */
+  static getReviewsPendingSubmission(callback) {
+    DBHelper.openDatabase().then(function(db) {
+      const store = db.transaction(['offline-reviews'], 'readwrite')
+      .objectStore('offline-reviews');
+      store.getAll().then(function(data) {
+        if (data.length !== 0) {
+          store.clear().then(() => {
+            callback(null, data);
+          })
+        }
+      })
+    });
+  }
+
   static openDatabase() {
     if (!'serviceWorker' in navigator) {
       return Promise.resolve();
@@ -304,7 +321,6 @@ class DBHelper {
   }
 
   static handleIntersection(entries) {
-  // There is no reason for it to be called a second time.
   // All code is my own original work. The following links were
   // consulted when working on it.
   // https://developers.google.com/web/updates/2016/04/intersectionobserver
@@ -319,6 +335,7 @@ class DBHelper {
               child.srcset = child['data-fullsrc'];
             }
           });
+          // There is no reason for it to be called a second time.
           observer.unobserve(entry.target);
         }
       })

@@ -121,6 +121,21 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
+  DBHelper.getReviewsPendingSubmission((error, reviews) => {
+    // TODO Add a visual loader to inform user that there is
+    // an attempt to upload old reviews
+    console.log(reviews);
+    reviews.forEach((review) => {
+      DBHelper.postRestaurantReview(review, (error, response) => {
+        if (error) {
+          // TODO Consider displaying this error
+          console.log(error);
+        }
+        displayRecentlySubmittedReview(review);
+      });
+    });
+  });
+
   if (!reviews) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';

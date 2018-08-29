@@ -312,6 +312,25 @@ class DBHelper {
     })
     .catch(error => {
       // TODO If offline, add to idb to send later
+      DBHelper.openDatabase().then(db => {
+        const tx = db.transaction(['offline-favorites'], 'readwrite');
+        const store = tx.objectStore('offline-favorites');
+        store.get(restaurant.id).then(data => {
+          // If favorite is already in db, then that means there is a
+          // pending favorite request. When offline, removing the
+          // pending request is essentially the same as sending a
+          // request to unfavorite it.
+          if (data) {
+            store.delete(restaurant.id);
+          } else {
+            // ID not found in db, save to post later
+            store.put({
+              id: restaurant.id,
+              favorite: restaurant.is_favorite === 'true' ? true : false
+            });
+          }
+        });
+      });
       callback(error, null);
     });
   }
@@ -332,6 +351,10 @@ class DBHelper {
 
       const offlineReviews = upgradeDb.createObjectStore('offline-reviews', {
         autoIncrement: true
+      });
+
+      const offlineFavorites = upgradeDb.createObjectStore('offline-favorites', {
+        keyPath: 'id'
       });
     });
   }

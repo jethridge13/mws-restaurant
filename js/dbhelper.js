@@ -304,7 +304,7 @@ class DBHelper {
    * Toggles the restaurant between favorite and not favorite
    */
   static toggleFavoriteRestaurant(restaurant, callback) {
-    const url = `${DBHelper.DATABASE_URL}/${restaurant.id}/?${restaurant.is_favorite ? 'is_favorite=false' : 'is_favorite=true'}`
+    const url = `${DBHelper.DATABASE_URL}/${restaurant.id}/?${restaurant.is_favorite === 'true' ? 'is_favorite=false' : 'is_favorite=true'}`
     fetch(url, {method: 'PUT'})
     .then(response => response.json())
     .then(json => {

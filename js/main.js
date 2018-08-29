@@ -175,24 +175,53 @@ createRestaurantHTML = (restaurant) => {
   picture.append(image);
   li.append(picture);
 
+  // Name
   const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   li.append(name);
 
+  // Neighborhood information
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
   li.append(neighborhood);
 
+  // Address information
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
   li.append(address);
 
+  // View Details button
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
   more.setAttribute('aria-label', `View Details for ${restaurant.name}`);
   more.setAttribute('role', 'button');
   li.append(more)
+
+  // Favorite button
+  const favorite = document.createElement('span');
+  favorite.classList.add('favorite-star');
+  favorite.setAttribute('tabindex', '0');
+  if (restaurant.is_favorite) {
+    favorite.innerHTML = '&#9733';
+    favorite.setAttribute('aria-label', `Remove ${restaurant.name} from favorites`);
+    favorite.classList.add('favorited');    
+  } else {
+    favorite.innerHTML = '&#9734';
+    favorite.setAttribute('aria-label', `Add ${restaurant.name} to favorites`);
+  }
+  favorite.setAttribute('role', 'button');
+  favorite.addEventListener('click', (event) => {
+    DBHelper.toggleFavoriteRestaurant(restaurant, (error, response) => {
+      // TODO
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(response);
+      }
+    });
+  });
+  li.append(favorite);
 
   return li
 }

@@ -300,6 +300,22 @@ class DBHelper {
     });
   }
 
+  /**
+   * Toggles the restaurant between favorite and not favorite
+   */
+  static toggleFavoriteRestaurant(restaurant, callback) {
+    const url = `${DBHelper.DATABASE_URL}/${restaurant.id}/?${restaurant.is_favorite ? 'is_favorite=false' : 'is_favorite=true'}`
+    fetch(url, {method: 'PUT'})
+    .then(response => response.json())
+    .then(json => {
+      callback(null, json);
+    })
+    .catch(error => {
+      // TODO If offline, add to idb to send later
+      callback(error, null);
+    });
+  }
+
   static openDatabase() {
     if (!'serviceWorker' in navigator) {
       return Promise.resolve();

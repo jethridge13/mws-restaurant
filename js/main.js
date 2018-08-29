@@ -202,22 +202,34 @@ createRestaurantHTML = (restaurant) => {
   const favorite = document.createElement('span');
   favorite.classList.add('favorite-star');
   favorite.setAttribute('tabindex', '0');
-  if (restaurant.is_favorite) {
+  if (restaurant.is_favorite === 'true') {
     favorite.innerHTML = '&#9733';
     favorite.setAttribute('aria-label', `Remove ${restaurant.name} from favorites`);
     favorite.classList.add('favorited');    
   } else {
     favorite.innerHTML = '&#9734';
     favorite.setAttribute('aria-label', `Add ${restaurant.name} to favorites`);
+    favorite.classList.remove('favorited');
   }
   favorite.setAttribute('role', 'button');
   favorite.addEventListener('click', (event) => {
     DBHelper.toggleFavoriteRestaurant(restaurant, (error, response) => {
-      // TODO
+      // TODO Add in loader
+      // Even though right now it changes instantensouly, it might not always
       if (error) {
+        // TODO Handle error
         console.error(error);
       } else {
-        console.log(response);
+        restaurant.is_favorite = response.is_favorite;
+        if (response.is_favorite === 'true') {
+          favorite.innerHTML = '&#9733';
+          favorite.setAttribute('aria-label', `Remove ${restaurant.name} from favorites`);
+          favorite.classList.add('favorited');  
+        } else {
+          favorite.innerHTML = '&#9734';
+          favorite.setAttribute('aria-label', `Add ${restaurant.name} to favorites`);
+          favorite.classList.remove('favorited');
+        }
       }
     });
   });

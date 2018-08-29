@@ -199,7 +199,7 @@ createRestaurantHTML = (restaurant) => {
   li.append(more)
 
   // Favorite button
-  const favorite = document.createElement('span');
+  const favorite = document.createElement('button');
   favorite.classList.add('favorite-star');
   favorite.setAttribute('tabindex', '0');
   if (restaurant.is_favorite === 'true') {

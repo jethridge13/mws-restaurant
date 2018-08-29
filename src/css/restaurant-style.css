@@ -57,13 +57,13 @@ button {
 	background-color: #8A470F;
 	border: none;
 	color: #fff;
-	display: inline-block;
 	font-size: 10pt;
 	margin: 15px 0 0;
 	padding: 8px 30px 10px;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
+	float: left;
 }
 
 form {
@@ -92,6 +92,7 @@ form textarea {
 form input, form textarea {
 	width: 80%;
 	float: left;
+	margin-right: 100%;
 }
 
 @media screen and (max-width: 1000px) {

@@ -301,6 +301,23 @@ class DBHelper {
   }
 
   /**
+   * Get all favorites pending submission
+   */
+  static getFavoritesPendingSubmission(callback) {
+    DBHelper.openDatabase().then(function(db) {
+      const store = db.transaction(['offline-favorites'], 'readwrite')
+      .objectStore('offline-favorites');
+      store.getAll().then(function(data) {
+        if (data.length !== 0) {
+          store.clear().then(() => {
+            callback(null, data);
+          })
+        }
+      })
+    });
+  }
+
+  /**
    * Toggles the restaurant between favorite and not favorite
    */
   static toggleFavoriteRestaurant(restaurant, callback) {

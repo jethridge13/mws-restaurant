@@ -105,7 +105,22 @@ updateRestaurants = () => {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
     }
-  })
+  });
+
+  DBHelper.getFavoritesPendingSubmission((error, favorites) => {
+    // TODO Add a visual loader to inform the user that there is
+    // an attempt to upload old reviews
+    favorites.forEach((favorite) => {
+      DBHelper.toggleFavoriteRestaurant(favorite, (error, response) => {
+        if (error) {
+          // TODO Consider displaying this error
+          console.log(error);
+        }
+        // TODO Change restaurant favorite status
+        console.log(response);
+      });
+    });
+  });
 }
 
 /**

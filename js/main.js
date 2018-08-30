@@ -106,21 +106,6 @@ updateRestaurants = () => {
       fillRestaurantsHTML();
     }
   });
-
-  DBHelper.getFavoritesPendingSubmission((error, favorites) => {
-    // TODO Add a visual loader to inform the user that there is
-    // an attempt to upload old reviews
-    favorites.forEach((favorite) => {
-      DBHelper.toggleFavoriteRestaurant(favorite, (error, response) => {
-        if (error) {
-          // TODO Consider displaying this error
-          console.log(error);
-        }
-        // TODO Change restaurant favorite status
-        console.log(response);
-      });
-    });
-  });
 }
 
 /**
@@ -226,6 +211,22 @@ createRestaurantHTML = (restaurant) => {
     favorite.setAttribute('aria-label', `Add ${restaurant.name} to favorites`);
     favorite.classList.remove('favorited');
   }
+  // If there is a pending favorite submission, retrieve it and submit
+  DBHelper.getFavoritePendingSubmission(restaurant.id, (error, favorite) => {
+    if (error) {
+      console.error(error);
+    } else if (favorite){
+      DBHelper.toggleFavoriteRestaurant(favorite, (error, response) => {
+        if (error) {
+          // TODO Display error
+          console.error(error);
+        } else {
+          // TODO Display success
+          console.log(response);
+        }
+      });
+    }
+  });
   favorite.setAttribute('role', 'button');
   favorite.addEventListener('click', (event) => {
     DBHelper.toggleFavoriteRestaurant(restaurant, (error, response) => {

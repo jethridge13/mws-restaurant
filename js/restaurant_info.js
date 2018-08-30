@@ -1,3 +1,5 @@
+// TODO Restaurant page not loading when offline
+
 let restaurant,
   observer;
 var map;
@@ -344,7 +346,6 @@ displayReviewSubmissionError = (error) => {
 }
 
 displayRecentlySubmittedReview = (reviewData) => {
-  // TODO
   const reviewsList = document.getElementById('reviews-list');
   const newReview = createReviewHTML(reviewData);
   newReview.style.backgroundColor = '#a4def1';

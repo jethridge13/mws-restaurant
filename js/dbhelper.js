@@ -58,33 +58,35 @@ class DBHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
+    // TODO Update to fix bug resulted in callback Hell.
+    // Consider refactoring.
     DBHelper.openDatabase().then(function(db) {
       const store = db.transaction(['restaurants']).objectStore('restaurants');
       store.get(parseInt(id)).then(function(data) {
         if (data) {
-          return data;
+          callback(null, data);
+        } else {
+          fetch(`${DBHelper.DATABASE_URL}/${id}`)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(json) {
+            // Put request into object store
+            DBHelper.openDatabase().then(function(db) {
+              const tx = db.transaction(['restaurants'], 'readwrite');
+              const store = tx.objectStore('restaurants');
+              store.put(json);
+            });
+            callback(null, json);
+          })
+          .catch(error => {
+            const errorResponse = (`Request failed with error ${error}`);
+            callback(errorResponse, null);
+          });
         }
       });
     })
 
-    fetch(`${DBHelper.DATABASE_URL}/${id}`)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(json) {
-      // Put request into object store
-
-      DBHelper.openDatabase().then(function(db) {
-        const tx = db.transaction(['restaurants'], 'readwrite');
-        const store = tx.objectStore('restaurants');
-        store.put(json);
-      });
-      callback(null, json);
-    })
-    .catch(error => {
-      const errorResponse = (`Request failed with error ${error}`);
-      callback(errorResponse, null);
-    });
   }
 
   /**

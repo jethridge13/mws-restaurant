@@ -58,35 +58,39 @@ class DBHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-    // TODO Update to fix bug resulted in callback Hell.
-    // Consider refactoring.
     DBHelper.openDatabase().then(function(db) {
       const store = db.transaction(['restaurants']).objectStore('restaurants');
       store.get(parseInt(id)).then(function(data) {
         if (data) {
           callback(null, data);
         } else {
-          fetch(`${DBHelper.DATABASE_URL}/${id}`)
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(json) {
-            // Put request into object store
-            DBHelper.openDatabase().then(function(db) {
-              const tx = db.transaction(['restaurants'], 'readwrite');
-              const store = tx.objectStore('restaurants');
-              store.put(json);
-            });
-            callback(null, json);
-          })
-          .catch(error => {
-            const errorResponse = (`Request failed with error ${error}`);
-            callback(errorResponse, null);
-          });
+          DBHelper._fetchRestaurantByIdAndAddToDb(id, callback);
         }
       });
-    })
+    });
+  }
 
+  /**
+   * Fetch a restaurant by its ID and add it to the database
+   */
+  static _fetchRestaurantByIdAndAddToDb(id, callback) {
+    fetch(`${DBHelper.DATABASE_URL}/${id}`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      // Put request into object store
+      DBHelper.openDatabase().then(function(db) {
+        const tx = db.transaction(['restaurants'], 'readwrite');
+        const store = tx.objectStore('restaurants');
+        store.put(json);
+      });
+      callback(null, json);
+    })
+    .catch(error => {
+      const errorResponse = (`Request failed with error ${error}`);
+      callback(errorResponse, null);
+    });
   }
 
   /**
@@ -182,18 +186,37 @@ class DBHelper {
    * Fetch all of a restaurant's reviews by ID.
    */
   static fetchReviews(id, callback) {
+    // TODO When new reviews are submitted, need to update db.
+    DBHelper.openDatabase().then(db => {
+      const tx = db.transaction(['reviews'], 'readwrite');
+      const store = tx.objectStore('reviews');
+      store.get(id).then(data => {
+        if (data) {
+          callback(null, data);
+        } else {
+          DBHelper._fetchReviewsAndAddToDB(id, callback);
+        }
+      })
+    });
+  }
+
+  static _fetchReviewsAndAddToDB(id, callback) {
     fetch(DBHelper.DATABASE_REVIEWS_URL + `/?restaurant_id=${id}`)
     .then(function(response) {
       return response.json();
     })
     .then(function(json) {
-      // TODO Add this to idb cache
+      DBHelper.openDatabase().then(db => {
+        const tx = db.transaction(['reviews'], 'readwrite');
+        const store = tx.objectStore('reviews');
+        store.put(json, id);
+      });
       callback(null, json);
     })
     .catch(error => {
       const errorResponse = (`Failed to fetch review from restaurant id: ${id}`);
       callback(errorResponse, null);
-    })
+    });
   }
 
   /**
@@ -379,6 +402,8 @@ class DBHelper {
       const offlineFavorites = upgradeDb.createObjectStore('offline-favorites', {
         keyPath: 'id'
       });
+
+      const reviews = upgradeDb.createObjectStore('reviews', {autoIncrement: true});
     });
   }
 

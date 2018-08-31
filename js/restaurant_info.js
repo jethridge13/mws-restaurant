@@ -1,5 +1,3 @@
-// TODO Restaurant page not loading when offline
-
 let restaurant,
   observer;
 var map;

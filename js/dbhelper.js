@@ -298,7 +298,6 @@ class DBHelper {
       return response.json();
     })
     .then(json => {
-      // TODO Add this to the db
       callback(null, json);
       DBHelper.addReviewToDb(json);
     })

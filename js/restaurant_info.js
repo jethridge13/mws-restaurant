@@ -37,12 +37,15 @@ fetchRestaurantFromURL = (callback) => {
         restaurant.reviews = DBHelper.fetchReviews(self.restaurant.id, (error, reviews) => {
           if (!error) {
             self.restaurant.reviews = reviews;
+            // fill reviews
+            clearReviewsHTML();
+            fillReviewsHTML();
           }
-          fillBreadcrumb();
-          fillRestaurantHTML();
-          callback(null, restaurant)
         });
       }
+      fillBreadcrumb();
+      fillRestaurantHTML();
+      callback(null, restaurant)
     });
   }
 }
@@ -88,8 +91,6 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  fillReviewsHTML();
 }
 
 /**
@@ -117,16 +118,12 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
-  const title = document.createElement('h3');
-  title.innerHTML = 'Reviews';
-  container.appendChild(title);
 
   // TODO Update date field for reviews just submitted
   // TODO Add listener to remove different color indicating new review
   DBHelper.getReviewsPendingSubmission((error, reviews) => {
     // TODO Add a visual loader to inform user that there is
     // an attempt to upload old reviews
-    console.log(reviews);
     reviews.forEach((review) => {
       DBHelper.postRestaurantReview(review, (error, response) => {
         if (error) {
@@ -150,6 +147,11 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     ul.appendChild(createReviewHTML(review));
   });
   container.appendChild(ul);
+}
+
+clearReviewsHTML = () => {
+  const list = document.getElementById('reviews-list');
+  list.innerHTML = "";
 }
 
 /**

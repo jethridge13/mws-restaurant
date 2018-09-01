@@ -186,13 +186,14 @@ class DBHelper {
    * Fetch all of a restaurant's reviews by ID.
    */
   static fetchReviews(id, callback) {
-    // TODO When new reviews are submitted, need to update db.
     DBHelper.openDatabase().then(db => {
       const tx = db.transaction(['reviews'], 'readwrite');
       const store = tx.objectStore('reviews');
       store.get(id).then(data => {
         if (data) {
           callback(null, data);
+          // If newer data available from server, fetch and display that.
+          DBHelper._fetchReviewsAndAddToDB(id, callback);
         } else {
           DBHelper._fetchReviewsAndAddToDB(id, callback);
         }
@@ -209,6 +210,7 @@ class DBHelper {
       DBHelper.openDatabase().then(db => {
         const tx = db.transaction(['reviews'], 'readwrite');
         const store = tx.objectStore('reviews');
+        store.delete(id);
         store.put(json, id);
       });
       callback(null, json);
@@ -296,7 +298,9 @@ class DBHelper {
       return response.json();
     })
     .then(json => {
+      // TODO Add this to the db
       callback(null, json);
+      DBHelper.addReviewToDb(json);
     })
     .catch(error => {
       DBHelper.openDatabase().then(function(db) {
@@ -322,6 +326,24 @@ class DBHelper {
           })
         }
       })
+    });
+  }
+
+  /**
+   * Add a review to the idb
+   */
+  static addReviewToDb(review) {
+    DBHelper.openDatabase().then(db => {
+      const store = db.transaction(['reviews'], 'readwrite')
+      .objectStore('reviews');
+      store.get(review.restaurant_id).then(data => {
+        let reviews = review;
+        if (data) {
+          data.push(review);
+          reviews = data;
+        }
+        store.put(reviews, review.restaurant_id);
+      });
     });
   }
 
@@ -357,7 +379,6 @@ class DBHelper {
       callback(null, json);
     })
     .catch(error => {
-      // TODO If offline, add to idb to send later
       DBHelper.openDatabase().then(db => {
         const tx = db.transaction(['offline-favorites'], 'readwrite');
         const store = tx.objectStore('offline-favorites');

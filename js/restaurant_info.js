@@ -119,7 +119,6 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
 
-  // TODO Update date field for reviews just submitted
   // TODO Add listener to remove different color indicating new review
   DBHelper.getReviewsPendingSubmission((error, reviews) => {
     // TODO Add a visual loader to inform user that there is
@@ -131,7 +130,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
           // TODO Display the non-submitted review with a pending color
           console.log(error);
         }
-        displayRecentlySubmittedReview(review);
+        displayRecentlySubmittedReview(response);
       });
     });
   });
@@ -255,7 +254,7 @@ submitReview = (form) => {
     }
     removeReviewLoader();
     displayReviewSubmissionSuccess();
-    displayRecentlySubmittedReview(postData);
+    displayRecentlySubmittedReview(response);
   });
   return false;
 }

@@ -54,12 +54,14 @@ fetchRestaurantFromURL = (callback) => {
  * Create restaurant HTML and add it to the webpage
  */
 fillRestaurantHTML = (restaurant = self.restaurant) => {
+  // TODO Add favorite button with favorite functionality
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
+  // Restaurant image
   const source = document.getElementById('restaurant-pic');
   source.srcset = DBHelper.imageSmallUrlForRestaurant(restaurant, 'webp');
   source.type = 'image/webp';
@@ -79,11 +81,19 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     image.removeEventListener('error', handler);
   });
 
+  // Intersection observer for image
   if (!observer) {
     observer = DBHelper.registerObserver();
   }
   observer.observe(source.parentElement);
 
+  // Add favorite button
+  const functionalFavoriteButton = DBHelper.createFavoriteButton(restaurant);
+  functionalFavoriteButton.classList.add('restaurant-favorite-star');
+  const originalFavoriteButton = document.getElementById('favorite-button');
+  originalFavoriteButton.parentNode.replaceChild(functionalFavoriteButton, originalFavoriteButton);
+
+  // Add cuisine type
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
 

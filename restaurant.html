@@ -227,6 +227,7 @@ span:focus {
   border: none;
   background: none;
   margin-top: 8px;
+  color: black;
 }
 
 .favorited {
@@ -286,6 +287,7 @@ span:focus {
   text-align: center;
   text-transform: uppercase;
 	width: 100%;
+  overflow: hidden;
 }
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
@@ -411,7 +413,7 @@ span:focus {
     padding: 140px 0px 30px;
   }
 
-  #restaurant-cuisine, #restaurant-img {
+  #restaurant-img {
     width: calc(100% - 20px);
   }
 
@@ -471,6 +473,14 @@ span:focus {
 
 #static-map {
 	margin: 0;
+}
+
+.restaurant-favorite-star {
+	width: calc(100% - 60px);
+	margin: 0 30px 10px 30px;
+	padding: 0;
+	border: 1px solid black;
+	border-radius: 20px;
 }
 
 .review-date {
@@ -607,7 +617,8 @@ screen and (min-width: 1275px) {
       <picture>
         <source id="restaurant-pic"></source>
         <img id="restaurant-img" alt="">
-      <picture>
+      </picture>
+      <div id="favorite-button"></div>
       <p id="restaurant-cuisine"></p>
       <p id="restaurant-address"></p>
       <table id="restaurant-hours"></table>

@@ -215,6 +215,7 @@ span:focus {
   border: none;
   background: none;
   margin-top: 8px;
+  color: black;
 }
 
 .favorited {
@@ -274,6 +275,7 @@ span:focus {
   text-align: center;
   text-transform: uppercase;
 	width: 100%;
+  overflow: hidden;
 }
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
@@ -399,7 +401,7 @@ span:focus {
     padding: 140px 0px 30px;
   }
 
-  #restaurant-cuisine, #restaurant-img {
+  #restaurant-img {
     width: calc(100% - 20px);
   }
 

@@ -401,6 +401,63 @@ class DBHelper {
     });
   }
 
+  /**
+   * Creates a favorite button element
+   */
+  static createFavoriteButton(restaurant) {
+    const favorite = document.createElement('button');
+    favorite.classList.add('favorite-star');
+    favorite.setAttribute('tabindex', '0');
+    if (restaurant.is_favorite === 'true') {
+      favorite.innerHTML = '&#9733';
+      favorite.setAttribute('aria-label', `Remove ${restaurant.name} from favorites`);
+      favorite.classList.add('favorited');    
+    } else {
+      favorite.innerHTML = '&#9734';
+      favorite.setAttribute('aria-label', `Add ${restaurant.name} to favorites`);
+      favorite.classList.remove('favorited');
+    }
+    // If there is a pending favorite submission, retrieve it and submit
+    DBHelper.getFavoritePendingSubmission(restaurant.id, (error, favorite) => {
+      if (error) {
+        console.error(error);
+      } else if (favorite){
+        DBHelper.toggleFavoriteRestaurant(favorite, (error, response) => {
+          if (error) {
+            // TODO Display error
+            console.error(error);
+          } else {
+            // TODO Display success
+            console.log(response);
+          }
+        });
+      }
+    });
+    favorite.setAttribute('role', 'button');
+    favorite.addEventListener('click', (event) => {
+      DBHelper.toggleFavoriteRestaurant(restaurant, (error, response) => {
+        // TODO Add in loader
+        // Even though right now it changes instantensouly, it might not always
+        if (error) {
+          // TODO Handle error
+          console.error(error);
+        } else {
+          restaurant.is_favorite = response.is_favorite;
+          if (response.is_favorite === 'true') {
+            favorite.innerHTML = '&#9733';
+            favorite.setAttribute('aria-label', `Remove ${restaurant.name} from favorites`);
+            favorite.classList.add('favorited');  
+          } else {
+            favorite.innerHTML = '&#9734';
+            favorite.setAttribute('aria-label', `Add ${restaurant.name} to favorites`);
+            favorite.classList.remove('favorited');
+          }
+        }
+      });
+    });
+    return favorite;
+  }
+
   static openDatabase() {
     if (!'serviceWorker' in navigator) {
       return Promise.resolve();

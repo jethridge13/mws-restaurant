@@ -22,36 +22,33 @@ class DBHelper {
    */
   static fetchRestaurants(callback) {
     DBHelper.openDatabase().then(function(db) {
-      const store = db.transaction(['misc']).objectStore('misc');
-      // TODO Consider getting by index instead of using getAll()
+      const store = db.transaction(['restaurants']).objectStore('restaurants');
       store.getAll().then(function(data) {
         if (data.length > 0) {
-          callback(null, data[0]);
-          return;
+          callback(null, data);
+        } else {
+          fetch(DBHelper.DATABASE_URL)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(json) {
+            DBHelper.openDatabase().then(function(db) {
+              const tx = db.transaction(['restaurants'], 'readwrite');
+              const store = tx.objectStore('restaurants');
+              json.forEach(restaurant => {
+                store.put(restaurant);
+              });
+            });
+            callback(null, json);
+          })
+          .catch(error => {
+            const errorResponse = (`Request failed with error ${error}`);
+            callback(errorResponse, null);
+          });
         }
       });
     });
 
-    fetch(DBHelper.DATABASE_URL)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(json) {
-      DBHelper.openDatabase().then(function(db) {
-        const tx = db.transaction(['misc'], 'readwrite');
-        const store = tx.objectStore('misc');
-        store.getAll().then(function(data) {
-          if (data.length === 0) {
-            store.put(json);
-          }
-        })
-      });
-      callback(null, json);
-    })
-    .catch(error => {
-      const errorResponse = (`Request failed with error ${error}`);
-      callback(errorResponse, null);
-    });
   }
 
   /**
@@ -347,6 +344,17 @@ class DBHelper {
   }
 
   /**
+   * Updates the db to reflect the most recent favorite status
+   */
+  static udateFavoriteInDb() {
+    DBHelper.openDatabase().then(db => {
+      const store = db.transaction(['favorites'], 'readwrite')
+      .objectStore('favorites');
+
+    });
+  }
+
+  /**
    * Get a specific favorite pending submission
    */
   static getFavoritePendingSubmission(id, callback) {
@@ -405,6 +413,7 @@ class DBHelper {
    * Creates a favorite button element
    */
   static createFavoriteButton(restaurant) {
+    // TODO Sync favorite button with idb when toggling
     const favorite = document.createElement('button');
     favorite.classList.add('favorite-star');
     favorite.setAttribute('tabindex', '0');
@@ -466,10 +475,6 @@ class DBHelper {
     return idb.open('mws-restaurant', 1, function(upgradeDb) {
       const restaurants = upgradeDb.createObjectStore('restaurants', {
         keyPath: 'id'
-      });
-
-      const misc = upgradeDb.createObjectStore('misc', {
-        autoIncrement: true
       });
 
       const offlineReviews = upgradeDb.createObjectStore('offline-reviews', {

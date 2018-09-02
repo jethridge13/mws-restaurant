@@ -54,7 +54,6 @@ fetchRestaurantFromURL = (callback) => {
  * Create restaurant HTML and add it to the webpage
  */
 fillRestaurantHTML = (restaurant = self.restaurant) => {
-  // TODO Add favorite button with favorite functionality
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
 

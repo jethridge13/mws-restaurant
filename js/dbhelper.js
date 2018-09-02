@@ -346,11 +346,11 @@ class DBHelper {
   /**
    * Updates the db to reflect the most recent favorite status
    */
-  static udateFavoriteInDb() {
+  static updateFavoriteInDb(restaurant) {
     DBHelper.openDatabase().then(db => {
-      const store = db.transaction(['favorites'], 'readwrite')
-      .objectStore('favorites');
-
+      const store = db.transaction(['restaurants'], 'readwrite')
+      .objectStore('restaurants');
+      store.put(restaurant);
     });
   }
 
@@ -383,6 +383,7 @@ class DBHelper {
     fetch(url, {method: 'PUT'})
     .then(response => response.json())
     .then(json => {
+      DBHelper.updateFavoriteInDb(json);
       callback(null, json);
     })
     .catch(error => {

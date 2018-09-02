@@ -9,6 +9,14 @@
 	margin: 0;
 }
 
+.restaurant-favorite-star {
+	width: calc(100% - 60px);
+	margin: 0 30px 10px 30px;
+	padding: 0;
+	border: 1px solid black;
+	border-radius: 20px;
+}
+
 .review-date {
 	font-size: 0.7rem;
 }

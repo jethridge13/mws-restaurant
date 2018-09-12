@@ -11,7 +11,7 @@ self.addEventListener('install', function(event) {
 		'index.html',
 		'restaurant.html',
 		'manifest.webmanifest',
-		'http://localhost:1337/restaurants'
+		'https://jethridge-mws-prod.herokuapp.com/restaurants'
 	];
 	event.waitUntil(
 		caches.open('mws-restaurant-v1').then(function(cache) {

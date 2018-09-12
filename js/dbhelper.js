@@ -230,9 +230,9 @@ class DBHelper {
    */
   static imageUrlForRestaurant(restaurant, type='jpg') {
     if (type === 'webp') {
-      return (`/mws-restaurant/img/dist/webp/${restaurant.photograph}.webp`);
+      return (`./img/dist/webp/${restaurant.photograph}.webp`);
     }
-    return (`/mws-restaurant/img/dist/${restaurant.photograph}.jpg`);
+    return (`./img/dist/${restaurant.photograph}.jpg`);
   }
 
   /**
@@ -240,9 +240,9 @@ class DBHelper {
    */
   static imageSmallUrlForRestaurant(restaurant, type='jpg') {
     if (type === 'webp') {
-      return (`/mws-restaurant/img/dist/small/webp/${restaurant.photograph}.webp`);
+      return (`./img/dist/small/webp/${restaurant.photograph}.webp`);
     }
-    return (`/mws-restaurant/img/dist/small/${restaurant.photograph}.jpg`);
+    return (`./img/dist/small/${restaurant.photograph}.jpg`);
   }
 
   /**

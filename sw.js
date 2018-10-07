@@ -7,7 +7,6 @@ self.addEventListener('install', function(event) {
 		'js/dbhelper.js',
 		'js/restaurant_info.js',
 		'js/idb.js',
-		'data/restaurants.json',
 		'index.html',
 		'restaurant.html',
 		'manifest.webmanifest',
